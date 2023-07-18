@@ -4,12 +4,19 @@
     <meta charset="utf-8">
     <title>Programming</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      .error {
+        color: red;
+        margin-top: 0.25rem;
+      }
+    </style>
   </head>
   <body>
     <canvas id="canvas"></canvas>
     <textarea id="code" rows="10" style="width: 100%;"></textarea>
     <button id="run">Run</button>
     <button id="reset">Reset</button>
+    <div class="error" style="display: none;"></div>
     <script>
       const RIGHT = 0
       const BOTTOM = 0.5 * Math.PI
@@ -18,6 +25,8 @@
 
       const canvas = document.getElementById('canvas')
       const context = canvas.getContext('2d')
+
+      const $error = document.querySelector('.error')
 
       let player = null
 
@@ -165,9 +174,16 @@
       }
 
       $run.addEventListener('click', async function () {
+        $error.style.display = 'none'
+        $error.textContent = ''
         queue = []
         const code = $code.value
-        eval(code)
+        try {
+          eval(code)
+        } catch (error) {
+          $error.textContent = 'Error: ' + error.message
+          $error.style.display = 'block'
+        }
         await run()
       })
 
