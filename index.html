@@ -11,6 +11,11 @@
     <button id="run">Run</button>
     <button id="reset">Reset</button>
     <script>
+      const RIGHT = 0
+      const BOTTOM = 0.5 * Math.PI
+      const LEFT = Math.PI
+      const TOP = 1.5 * Math.PI
+
       const canvas = document.getElementById('canvas')
       const context = canvas.getContext('2d')
 
@@ -88,9 +93,45 @@
 
       const size = 10
 
-      function renderI({row, column}) {
+      function renderI({row, column, angle}) {
         context.fillStyle = 'green'
         context.fillRect(column * size, row * size, size, size)
+        context.fillStyle = 'white'
+        let width
+        let height
+        switch (angle) {
+          case RIGHT:
+          case LEFT:
+            width = size / 2
+            height = 2
+            break
+          case TOP:
+          case BOTTOM:
+            width = 2
+            height = size / 2
+            break
+        }
+        let x
+        let y
+        switch (angle) {
+          case RIGHT:
+            x = column * size + 0.5 * size
+            y = row * size + 0.5 * size - 1
+            break
+          case LEFT:
+            x = column * size
+            y = row * size + 0.5 * size - 1
+            break
+          case TOP:
+            x = column * size + 0.5 * size - 1
+            y = row * size
+            break
+          case BOTTOM:
+            x = column * size + 0.5 * size - 1
+            y = row * size + 0.5 * size
+            break
+        }
+        context.fillRect(x, y, width, height)
       }
 
       function renderO({ row, column }) {
@@ -142,13 +183,13 @@
           const action = queue.shift()
           switch (action.action) {
             case 'move forward':
-              if (player.angle === 0) {
+              if (player.angle === RIGHT) {
                 player.column++
-              } else if (player.angle === 0.5 * Math.PI) {
+              } else if (player.angle === TOP) {
                 player.row--
-              } else if (player.angle === Math.PI) {
+              } else if (player.angle === LEFT) {
                 player.column--
-              } else if (player.angle === 1.5 * Math.PI) {
+              } else if (player.angle === BOTTOM) {
                 player.row++
               }
               if (map[player.row][player.column] === o) {
@@ -156,10 +197,10 @@
               }
               break
             case 'turn left':
-              player.angle = (player.angle + 0.5 * Math.PI) % (2 * Math.PI)
+              player.angle = (player.angle - 0.5 * Math.PI) % (2 * Math.PI)
               break
             case 'turn right':
-              player.angle = (player.angle - 0.5 * Math.PI) % (2 * Math.PI)
+              player.angle = (player.angle + 0.5 * Math.PI) % (2 * Math.PI)
               if (player.angle < 0) {
                 player.angle += 2 * Math.PI
               }
