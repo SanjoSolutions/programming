@@ -28,7 +28,7 @@
 
       const $error = document.querySelector('.error')
 
-      let player = null
+      let unit = null
 
       const _ = ' '
       const o = 'o'
@@ -39,14 +39,14 @@
           map: [
             [_, o, o]
           ],
-          player: { row: 0, column: 0, angle: 0 }
+          unit: { row: 0, column: 0, angle: 0 }
         },
         {
           map: [
             [_, o],
             [o, o]
           ],
-          player: { row: 0, column: 0, angle: 0 }
+          unit: { row: 0, column: 0, angle: 0 }
         },
         {
           map: [
@@ -54,7 +54,7 @@
             [o, x, o],
             [o, o, o]
           ],
-          player: { row: 0, column: 0, angle: 0 }
+          unit: { row: 0, column: 0, angle: 0 }
         }
       ]
 
@@ -63,7 +63,7 @@
       function changeLevel(levelIndex) {
         currentLevelIndex = levelIndex
         currentLevel = copyLevel(levels[currentLevelIndex])
-        player = { ...currentLevel.player }
+        unit = { ...currentLevel.unit }
       }
 
       changeLevel(0)
@@ -71,7 +71,7 @@
       function copyLevel(level) {
         return {
           map: copyMap(level.map),
-          player: {...level.player}
+          unit: {...level.unit}
         }
       }
 
@@ -97,12 +97,12 @@
             }
           }
         }
-        renderI(player)
+        renderUnit(unit)
       }
 
       const size = 10
 
-      function renderI({row, column, angle}) {
+      function renderUnit({row, column, angle}) {
         context.fillStyle = 'green'
         context.fillRect(column * size, row * size, size, size)
         context.fillStyle = 'white'
@@ -189,7 +189,7 @@
 
       $reset.addEventListener('click', function () {
         currentLevel = copyLevel(levels[currentLevelIndex])
-        player = {...currentLevel.player}
+        unit = {...currentLevel.unit}
         renderLevel()
       })
 
@@ -199,26 +199,26 @@
           const action = queue.shift()
           switch (action.action) {
             case 'move forward':
-              if (player.angle === RIGHT) {
-                player.column++
-              } else if (player.angle === TOP) {
-                player.row--
-              } else if (player.angle === LEFT) {
-                player.column--
-              } else if (player.angle === BOTTOM) {
-                player.row++
+              if (unit.angle === RIGHT) {
+                unit.column++
+              } else if (unit.angle === TOP) {
+                unit.row--
+              } else if (unit.angle === LEFT) {
+                unit.column--
+              } else if (unit.angle === BOTTOM) {
+                unit.row++
               }
-              if (map[player.row][player.column] === o) {
-                map[player.row][player.column] = _
+              if (map[unit.row][unit.column] === o) {
+                map[unit.row][unit.column] = _
               }
               break
             case 'turn left':
-              player.angle = (player.angle - 0.5 * Math.PI) % (2 * Math.PI)
+              unit.angle = (unit.angle - 0.5 * Math.PI) % (2 * Math.PI)
               break
             case 'turn right':
-              player.angle = (player.angle + 0.5 * Math.PI) % (2 * Math.PI)
-              if (player.angle < 0) {
-                player.angle += 2 * Math.PI
+              unit.angle = (unit.angle + 0.5 * Math.PI) % (2 * Math.PI)
+              if (unit.angle < 0) {
+                unit.angle += 2 * Math.PI
               }
               break
           }
