@@ -9,6 +9,9 @@ const config = merge(prod, {
     },
     scriptType: 'text/javascript',
   },
+  devServer: {
+    devMiddleware: undefined,
+  },
   module: {
     rules: [
       {
