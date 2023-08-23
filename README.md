@@ -9,6 +9,7 @@ The available functions to move the green points are below.
 
 ## Available functions
 
-* `moveForward()`
-* `turnRight()`
-* `turnLeft()`
+- `moveForward()`
+- `turnRight()`
+- `turnLeft()`
+- `retrieveAllNodes()`: returns a list of the nodes (the brown points).

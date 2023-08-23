@@ -1,0 +1,22 @@
+{
+  "type": "module",
+  "scripts": {
+    "build": "webpack --config webpack.prod.js",
+    "build:watch": "webpack serve --open --config webpack.dev.js"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "monaco-editor": "^0.41.0"
+  },
+  "devDependencies": {
+    "@sanjo/webpack": "^2.1.0",
+    "@types/lodash": "^4.14.197",
+    "@webpack-cli/serve": "^2.0.5",
+    "file-loader": "^6.2.0",
+    "css-loader": "5.2.7",
+    "monaco-editor-webpack-plugin": "^7.1.0",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
+  }
+}
