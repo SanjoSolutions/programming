@@ -190,6 +190,7 @@ const editor = monaco.editor.create(document.getElementById('code'), {
   language: 'javascript',
   automaticLayout: true,
 })
+editor.focus()
 
 let queue = null
 
