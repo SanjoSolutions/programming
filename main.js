@@ -8,8 +8,6 @@ import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker'
 
 self.MonacoEnvironment = {
   getWorker: async function (workerId, label) {
-    let worker
-
     switch (label) {
       case 'json':
         return jsonWorker()
