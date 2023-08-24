@@ -1,5 +1,34 @@
 import * as monaco from 'monaco-editor'
 import * as _ from 'lodash'
+import jsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker'
+import cssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker'
+import htmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker'
+import typescriptWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker'
+import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker'
+
+self.MonacoEnvironment = {
+  getWorker: async function (workerId, label) {
+    let worker
+
+    switch (label) {
+      case 'json':
+        return jsonWorker()
+      case 'css':
+      case 'scss':
+      case 'less':
+        return cssWorker()
+      case 'html':
+      case 'handlebars':
+      case 'razor':
+        return htmlWorker()
+      case 'typescript':
+      case 'javascript':
+        return typescriptWorker()
+      default:
+        return editorWorker()
+    }
+  },
+}
 
 const RIGHT = 0
 const BOTTOM = 0.5 * Math.PI
@@ -51,6 +80,7 @@ const levels = [
   */
 ]
 
+let currentLevel = null
 let currentLevelIndex = null
 
 function changeLevel(levelIndex) {
