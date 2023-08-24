@@ -1,5 +1,5 @@
 import * as monaco from 'monaco-editor'
-import * as _ from 'lodash'
+import { debounce } from 'lodash-es'
 import jsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker'
 import cssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker'
 import htmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker'
@@ -272,7 +272,7 @@ $reset.addEventListener('click', function () {
 })
 
 editor.getModel()?.onDidChangeContent(
-  _.debounce(function () {
+  debounce(function () {
     saveCode()
   })
 )
